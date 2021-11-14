@@ -15,7 +15,7 @@ COLLECTING METRICS:
 Tasks:
 -	Add tags in the Agent config file and show us a screenshot of your host and its tags on the Host Map page in Datadog 
 -	 ![tag code](Tagpicture1.png)
--    ![second tag code](Tagpicture2)
+-    ![second tag code](Tagpicture2.png)
 -	Create a custom Agent check that submits a metric with a random value between 0 and 1000 
 -    ![my metric code ](mymetriccodepicture3.png)
 -	Change your check’s collection interval so that it only submits the metric once every 45 seconds 
@@ -35,11 +35,11 @@ Utilize the Datadog API to create a Timeboard that contains:
  
 Once this is created, access the dashboard from your Dashboard List in the UI:
 -	Set the Timeboard’s timeframe to the past 5 minutes 
--    ![5 minute change](fiveseondspicture8.png)
+-    ![5 minute change](fivesecondspicture8.png)
 
 
 -	Take a snapshot of this graph and use the @ notation to send it to yourself
--    ![@ picture dashboard](atpicture9.png)
+-    ![@ picture dashboard](atpicturepicture9.png)
 
 BONUS QUESTION: What is the Anomaly graph display?
 ANSWER: The Anomaly graph displays two views the historical view and evaluation preview. The historical view allows the user to monitor the metric at different time scales to better understand why data may be considered anomalous or non-anomalous. The evaluation preview is longer than the alerting window and helps provide information about what the anomalies algorithm takes into account when predicting the bounds. The anomaly function uses the past data to predict what is expected in the future.
@@ -58,8 +58,8 @@ Please configure the monitor’s message so that it will:
 -	When this monitor sends you and email notification, take a screenshot of the email that it sends you
 
 Bonus Question: Since this monitor is going to alert pretty often, you don’t want to be alerted when you are out of the office. Set up two scheduled downtimes for this monitor:
--    ![email alert 1](email1picture10.png)  
--    ![email alert 2](email2picture11.png)
+-    ![email alert 1](email1picture10.jpg)  
+-    ![email alert 2](email2picture11.jpg)
 -    ![downtime 1](alarm1picture12.png)
 -    ![downtime 2](alarm2picture13.png) 
  
