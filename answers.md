@@ -37,17 +37,18 @@ $ vagrant ssh
 ``` 
  
 Once these steps are done, it is now time to install and configure the Datadog Agent. Using the Datadog information link: https://docs.datadoghq.com/agent/
-Select the “Unbutu” directions. It should bring you to the following link https://docs.datadoghq.com/agent/basic_agent_usage/ubuntu/?tab=agentv6v7. On the webpage, copy and paste the following command lines into the terminal to install the agent:
+- Select the “Unbutu” directions. It should bring you to the following link https://docs.datadoghq.com/agent/basic_agent_usage/ubuntu/?tab=agentv6v7. 
+- On the webpage, copy and paste the following command lines into the terminal to install the agent:
 
-DESCRIPTION:
-Start Agent as a service	
-Command:
+- DESCRIPTION:
+- Start Agent as a service	
+- Command:
 ```
 sudo service datadog-agent start
 ```
 DESCRIPTION:
-Run a check
-COMMAND:
+- Run a check
+- COMMAND:
 ```	
 sudo -u dd-agent -- datadog-agent check <CHECK_NAME>
 ```
@@ -61,38 +62,38 @@ COLLECTING METRICS:
 
 Directions to add a tag:
 To add tags in the Agent config file, go back to your terminal and paste the following code
-DESCRIPTION: 
-This command will allow you to go into the datadog.yaml config file and alter some of the code
-COMMAND:
+- DESCRIPTION: 
+- This command will allow you to go into the datadog.yaml config file and alter some of the code
+- COMMAND:
 ```
 vagrant@vagrant:~$ sudo nano datadog.yaml
 ```
 
 From there, scroll down to where you see “tag”, remove the “##” marks and add a tag name (the tag name can be whatever you’d like to name it!): 
-CODE:
+- CODE:
 ```
 Tags:
 -	“environment : dev”
 ```
 -	 ![tag code](Tagpicture1.png)
 - Once you have completed adding a tag, it is time to restart the agent and refresh the Datadog Dashboard.
-DESCRIPTION:
-This will restart the agent.
-COMMAND:
+- DESCRIPTION:
+- This will restart the agent.
+- COMMAND:
 ```
 vagrant@vagrant:~$ sudo service datadog-agent restart
 ```
 
-DESCRIPTION:
-If the metric still does not show on the dashboard after the restart and a refresh of the dashboard, try this step. This command will stop the agent. 	
-COMMAND:
+- DESCRIPTION:
+- If the metric still does not show on the dashboard after the restart and a refresh of the dashboard, try this step. This command will stop the agent. 	
+- COMMAND:
 ```
 vagrant@vagrant:~$ sudo service datadog-agent stop
 ```
 
-DESCRIPTION:
-After stopping the agent, you must start the agent again. These stop/start commands is an alternative way of restarting the agent. 	
-COMMAND:
+- DESCRIPTION:
+- After stopping the agent, you must start the agent again. These stop/start commands is an alternative way of restarting the agent. 	
+- COMMAND:
 ```
 vagrant@vagrant:~$ sudo service datadog-agent start
 ```
@@ -105,17 +106,17 @@ Once the agent restart has been completed, go back to the web browser and refres
 I referenced this website: https://ubuntu.com/server/docs/databases-postgresql
 
 
-DESCRIPTION:
-Installs the database and set a password for the postgres user
-COMMAND:
+- DESCRIPTION:
+- Installs the database and set a password for the postgres user
+- COMMAND:
 ```
 vagrant@vagrant:~$ sudo apt install postgresql
 vagrant@vagrant:~$ sudo -u postgres psql template1
 ```
 
-DESCRIPTION:
-Implementing the Datadog Agent	
-COMMAND:
+- DESCRIPTION:
+- Implementing the Datadog Agent	
+- COMMAND:
 ```
 vagrant@vagrant:/etc/postgresql/10$ sudo vim /etc/datadog-agent/datadog.yaml^C
 vagrant@vagrant:/etc/postgresql/10$ cd /etc/datadog-agent
@@ -148,8 +149,8 @@ class HelloCheck(AgentCheck):
     def check(self, instance):
         self.monotonic_count('my_metric', random.randint(0,1000))
 ```
-We would also like to change the .py so that it only submits the metric once every 45 seconds. To do so use this line of command and change the default value (30) to 45.
-Code:
+- We would also like to change the .py so that it only submits the metric once every 45 seconds. To do so use this line of command and change the default value (30) to 45.
+- Code:
 ```
 vagrant@vagrant:/etc/datadog-agent/conf.d$ sudo vim hello.yaml
 ```
@@ -174,18 +175,17 @@ ANSWER: yes, you can change the collection interval without modifying the Python
 
 VISUALIZING DATA:
 Utilize the Datadog API to create a Time board that contains:
-
-Your custom metric scoped over your host
+*Your custom metric scoped over your host*
 -    ![my metric dashboard](mymetricpicture5.png)
 - Selecting “my_metric” we created previously, I decided to use a time-series graph. I used this type of graph because I wanted to see what the metric was producing for the randomly generated numbers. I also thought of using a histogram, but I was curious if the code would generate more “0” or “less than 500” in a timeframe than other numbers. Additionally, since it was just created recently, it made the most sense to use a time-series graph.
 
 
--	Any metric from the Integration on your Database with the anomaly function applied
+*Any metric from the Integration on your Database with the anomaly function applied*
 -    ![database metric](databasemetricpicture6.png)
 - For this metric as well, using any metric from my database with the anomaly function applied, I used a time-series table. Since the VM was closed every time I logged off, it would be good to use the time-series chart to see when there were issues within the small time frame when the VM is turned on, other graphs that summarized the data did not show helpful information.
 
 
--	Your customer metric with the rollup function applied to sum up all the points for the past hour into one bucket
+*Your customer metric with the rollup function applied to sum up all the points for the past hour into one bucket* 
 -    ![bucket feature](bucketpicture7.png)
 - Using the roll-up function, to sum up, all points for my my_metric function, the time-series graph was a good choice to use. It provides a helpful insight of at which time, what was the total of all of my randomly generated numbers. 
 
@@ -225,12 +225,13 @@ Bonus Question: Since this monitor is going to alert pretty often, you don’t w
  
 - COLLECTING APM DATA:
 We are provided a Flask App. 
-Let us save the code into a .py called “testapp”
+- Let us save the code into a .py called “testapp”
+```
 vagrant@vagrant:~$ mkdir test_flask_app
 vagrant@vagrant:~$ cd test_flask_app
 vagrant@vagrant:~/test_flask_app$ vim testapp
 vagrant@vagrant:~/test_flask_app$ mv testapp testapp.py
-
+```
 -    ![code for the app](apppicture15.png)
 
 - Code:
