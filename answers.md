@@ -62,6 +62,7 @@ After these steps, the environment and the Datadog Agent are now complete!
 COLLECTING METRICS:
 
 ![datameme](ddCollectingMetricsmeme.jpeg)
+
 Datadog is great at collecting data for monitoring a company’s metrics. One task we can start off with is to use the Agent to configure a tag and monitor it using a Host Map on the Datadog dashboard. 
 
 Directions to add a tag:
@@ -190,6 +191,7 @@ vagrant@vagrant:/etc/datadog-agent/checks.d$ sudo -u dd-agent -- datadog-agent c
 ```
 
 BONUS QUESTION: Can you change the collection interval without modifying the Python check file you created?
+
 ANSWER: yes, you can change the collection interval without modifying the Python check file created. 
 
 
@@ -224,6 +226,7 @@ Once this is created, access the dashboard from your Dashboard List in the UI:
 
 
 BONUS QUESTION: What is the Anomaly graph display?
+
 ANSWER: The Anomaly graph displays two views the historical view and the evaluation preview. The historical view allows the user to monitor the metric at different time scales to better understand why data may be considered anomalous or non-anomalous. The evaluation preview is longer than the alerting window and helps provide information about what the anomalies algorithm takes into account when predicting the bounds. The anomaly function uses the past data to predict what is expected in the future.
 
 
@@ -306,6 +309,7 @@ Once the setup for the flask app is complete, I went back to the dashboard and c
 
 
 BONUS QUESTION: What is the difference between a Service and a Resource?
+
 ANSWER: A Service can be a self-contained, independently developed, deployed, managed, and maintained software implementation supporting specific business-relevant functionality for companies. It is not a programming contrast or a set of APIs, but rather an architectural and deployment artifact used for the implementation of enterprise solutions. A Resource on the other hand is a directly accessible, independently developed, deployed, managed, and maintained software artifact supporting specific data.
 
 
