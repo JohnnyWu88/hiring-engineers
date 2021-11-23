@@ -37,8 +37,10 @@ $ vagrant ssh
 ``` 
  
 Once these steps are done, it is now time to install and configure the Datadog Agent. Using the Datadog information link: https://docs.datadoghq.com/agent/
-- Select the “Unbutu” directions. It should bring you to the following link https://docs.datadoghq.com/agent/basic_agent_usage/ubuntu/?tab=agentv6v7. 
-- On the webpage, copy and paste the following command lines into the terminal to install the agent:
+
+Select the “Unbutu” directions. It should bring you to the following link https://docs.datadoghq.com/agent/basic_agent_usage/ubuntu/?tab=agentv6v7. 
+
+On the webpage, copy and paste the following command lines into the terminal to install the agent:
 
 DESCRIPTION:
 - Start Agent as a service	
@@ -60,7 +62,7 @@ After these steps, the environment and the Datadog Agent are now complete!
 COLLECTING METRICS:
 
 ![datameme](ddCollectingMetricsmeme.jpeg)
-- Datadog is great at collecting data for monitoring a company’s metrics. One task we can start off with is to use the Agent to configure a tag and monitor it using a Host Map on the Datadog dashboard. 
+Datadog is great at collecting data for monitoring a company’s metrics. One task we can start off with is to use the Agent to configure a tag and monitor it using a Host Map on the Datadog dashboard. 
 
 Directions to add a tag:
 To add tags in the Agent config file, go back to your terminal and paste the following code
@@ -74,12 +76,14 @@ vagrant@vagrant:~$ sudo nano datadog.yaml
 ```
 
 From there, scroll down to where you see “tag”, remove the “##” marks and add a tag name (the tag name can be whatever you’d like to name it!): 
-- CODE:
+
+CODE:
 ```
 Tags:
 -	“environment : dev”
 ```
--	 ![tag code](Tagpicture1.png)
+
+![tag code](Tagpicture1.png)
 
 Once you have completed adding a tag, it is time to restart the agent and refresh the Datadog Dashboard.
 
@@ -109,9 +113,9 @@ vagrant@vagrant:~$ sudo service datadog-agent start
 
 Once the agent restart has been completed, go back to the web browser and refresh the dashboard. Select a host map and select the tag as your metric as shown below.
 
--    ![second tag code](Tagpicture2.png)
+![second tag code](Tagpicture2.png)
 
-- Another feature in Datadog that we can utilize is creating a custom agent. We first need to install a database. I chose PostgreSQL, but any database will work.
+Another feature in Datadog that we can utilize is creating a custom agent. We first need to install a database. I chose PostgreSQL, but any database will work.
 I referenced this website: https://ubuntu.com/server/docs/databases-postgresql
 
 
@@ -140,7 +144,7 @@ vagrant@vagrant:/etc/datadog-agent/checks.d$ ls
 vagrant@vagrant:/etc/datadog-agent/checks.d$ sudo vim hello.py
 ```
 Once I created a custom agent and called it “hello.py”, I want to create the agent check that submits a metric with a random value between 0 and 1000
--    ![my metric code ](mymetriccodepicture3.png)
+![my metric code ](mymetriccodepicture3.png)
 
 
 CODE: 
@@ -162,7 +166,8 @@ class HelloCheck(AgentCheck):
     def check(self, instance):
         self.monotonic_count('my_metric', random.randint(0,1000))
 ```
-- We would also like to change the .py so that it only submits the metric once every 45 seconds. To do so use this line of command and change the default value (30) to 45.
+
+We would also like to change the .py so that it only submits the metric once every 45 seconds. To do so use this line of command and change the default value (30) to 45.
 
 Code:
 ```
@@ -191,17 +196,20 @@ ANSWER: yes, you can change the collection interval without modifying the Python
 VISUALIZING DATA:
 Utilize the Datadog API to create a Time board that contains:
 *Your custom metric scoped over your host*
--    ![my metric dashboard](mymetricpicture5.png)
+![my metric dashboard](mymetricpicture5.png)
+
 - Selecting “my_metric” we created previously, I decided to use a time-series graph. I used this type of graph because I wanted to see what the metric was producing for the randomly generated numbers. I also thought of using a histogram, but I was curious if the code would generate more “0” or “less than 500” in a timeframe than other numbers. Additionally, since it was just created recently, it made the most sense to use a time-series graph.
 
 
 *Any metric from the Integration on your Database with the anomaly function applied*
--    ![database metric](databasemetricpicture6.png)
+![database metric](databasemetricpicture6.png)
+
 - For this metric as well, using any metric from my database with the anomaly function applied, I used a time-series table. Since the VM was closed every time I logged off, it would be good to use the time-series chart to see when there were issues within the small time frame when the VM is turned on, other graphs that summarized the data did not show helpful information.
 
 
 *Your customer metric with the rollup function applied to sum up all the points for the past hour into one bucket* 
--    ![bucket feature](bucketpicture7.png)
+![bucket feature](bucketpicture7.png)
+
 - Using the roll-up function, to sum up, all points for my my_metric function, the time-series graph was a good choice to use. It provides a helpful insight of at which time, what was the total of all of my randomly generated numbers. 
 
 
@@ -214,7 +222,8 @@ Once this is created, access the dashboard from your Dashboard List in the UI:
 -	Take a snapshot of this graph and use the @ notation to send it to yourself
 -    ![@ picture dashboard](atpicturepicture9.png)
 
-- BONUS QUESTION: What is the Anomaly graph display?
+
+BONUS QUESTION: What is the Anomaly graph display?
 ANSWER: The Anomaly graph displays two views the historical view and the evaluation preview. The historical view allows the user to monitor the metric at different time scales to better understand why data may be considered anomalous or non-anomalous. The evaluation preview is longer than the alerting window and helps provide information about what the anomalies algorithm takes into account when predicting the bounds. The anomaly function uses the past data to predict what is expected in the future.
 
 
@@ -233,23 +242,24 @@ To complete these monitoring systems, I used this link and followed the steps: h
 
 Bonus Question: Since this monitor is going to alert pretty often, you don’t want to be alerted when you are out of the office. Set up two scheduled downtimes for this monitor:
 
--    ![email alert 1](email1picture10.jpg)  
--    ![email alert 2](email2picture11.jpg)
--    ![downtime 1](alarm1picture12.png)
--    ![downtime 2](alarm2picture13.png) 
+![email alert 1](email1picture10.jpg)  
+![email alert 2](email2picture11.jpg)
+![downtime 1](alarm1picture12.png)
+![downtime 2](alarm2picture13.png) 
  
 - COLLECTING APM DATA:
 We are provided a Flask App. 
-- Let us save the code into a .py called “testapp”
+
+Let us save the code into a .py called “testapp”
 ```
 vagrant@vagrant:~$ mkdir test_flask_app
 vagrant@vagrant:~$ cd test_flask_app
 vagrant@vagrant:~/test_flask_app$ vim testapp
 vagrant@vagrant:~/test_flask_app$ mv testapp testapp.py
 ```
--    ![code for the app](apppicture15.png)
+![code for the app](apppicture15.png)
 
-- Code:
+Code:
 ```
 from ddtrace import patch_all
 patch_all()
@@ -290,8 +300,9 @@ vagrant@vagrant:~/test_flask_app$ pip3 install ddtrace
 ```
  This is my link to the Dashboard along with a screenshot: https://app.datadoghq.com/dashboard/hbb-xrj-zzj/johnnys-se-timeboard-dashboard?from_ts=1636843557909&to_ts=1636857957909&live=true 
 
--    ![Screenshot of a Dashboard with both APM and Infrastructure Metrics](twometricspicture14.png)
-- Once the setup for the flask app is complete, I went back to the dashboard and created a time-series graph of I/O warnings. When looking at I/O averages, it is good to see when these errors are occurring so we can see if it is impacting major business usage. Additionally, creating warnings when there are high I/O warnings is necessary as it indicates there is a bottleneck where the system does not have fast enough input/output performance. 
+![Screenshot of a Dashboard with both APM and Infrastructure Metrics](twometricspicture14.png)
+
+Once the setup for the flask app is complete, I went back to the dashboard and created a time-series graph of I/O warnings. When looking at I/O averages, it is good to see when these errors are occurring so we can see if it is impacting major business usage. Additionally, creating warnings when there are high I/O warnings is necessary as it indicates there is a bottleneck where the system does not have fast enough input/output performance. 
 
 
 BONUS QUESTION: What is the difference between a Service and a Resource?
@@ -301,24 +312,24 @@ ANSWER: A Service can be a self-contained, independently developed, deployed, ma
 
 FINAL QUESTION:
 
--    ![CutePokemon](ddPokemon.png)
+![CutePokemon](ddPokemon.png)
 
-- Datadog allows for an effective and flexible monitoring system of a client’s entire infrastructure (it was used to help monitor Pokemon Go!). There are several ways where Datadog can be leveraged to monitor everything, such as utilizing Agent Check to collect metrics from any data sources and running HTTP checks to verify if a website is up or down. With this, I believe Datadog can be extremely effective in three different industries.
+Datadog allows for an effective and flexible monitoring system of a client’s entire infrastructure (it was used to help monitor Pokemon Go!). There are several ways where Datadog can be leveraged to monitor everything, such as utilizing Agent Check to collect metrics from any data sources and running HTTP checks to verify if a website is up or down. With this, I believe Datadog can be extremely effective in three different industries.
  
 Retail/Grocery Market:
 The opportunities for utilizing Datadog to help track metrics are endless in the retail industry. Many grocery markets are facing trouble keeping certain items in stock, especially when the pandemic has disrupted the supply chain. Markets can connect their internal warehouse and vendor data to Datadog, along with their current inventory movement data to help understand when the best time is to repurchase items in real-time. There are also opportunities where grocery markets and retail stores that have self-service machines for checkout, can utilize Datadog dashboards to help understand which check-out machines require maintenance. With that information, they can properly inform their customers of the approximate wait time for an available machine and direct any congestions to other registers attended by a representative. 
 
--    ![SpongebobMeme](shoppingPicture.jpeg)
+![SpongebobMeme](shoppingPicture.jpeg)
  
-- Healthcare:
+Healthcare:
 Having real-time knowledge of what PPE and medical instruments are in use or available is very important. Datadog can be utilized in tracking what instruments are in use in different hospital rooms, and when they are currently idle but are left in patient rooms unused. Additionally, Datadog dashboards can track the average patient time/performance time of medical professionals. This means when doctors or nurses are requested, patients can be given a more accurate estimate time of when they will be seen by a professional. The healthcare industry is also gravitating towards mobile devices, so tracking security and being HIPAA compliant is very important. To avoid large violation fees, hospital IT teams can track and view when security procedures are no longer up to date on devices and see what information could be compromised.  
  
 Food Delivery Services:
 The food delivery services have peaked during the pandemic. Area managers of food delivery service providers can track and report on their drivers’ performance time when reaching the restaurant, waiting, and finally delivering the takeout to the consumers. With this information, they can coach their drivers and identify areas where they can improve on. Area managers can also use this information to help reorganize and notify the drivers to delay going to certain restaurants if the restaurant has previously missed their average order completion time.
 
--    ![DeliveryService](HFdeliveryFoodLogo.png)
+![DeliveryService](HFdeliveryFoodLogo.png)
 
-- Datadog is truly an effective and adaptable resource that every industry can leverage to help them identify their areas of weaknesses as well as create new metrics to help track and improve productivity and performance. 
+Datadog is truly an effective and adaptable resource that every industry can leverage to help them identify their areas of weaknesses as well as create new metrics to help track and improve productivity and performance. 
  
  
 Thank you so much for this assignment! I look forward to utilizing my skills to help be an asset to the team!
