@@ -40,15 +40,17 @@ Once these steps are done, it is now time to install and configure the Datadog A
 - Select the “Unbutu” directions. It should bring you to the following link https://docs.datadoghq.com/agent/basic_agent_usage/ubuntu/?tab=agentv6v7. 
 - On the webpage, copy and paste the following command lines into the terminal to install the agent:
 
-- DESCRIPTION:
+DESCRIPTION:
 - Start Agent as a service	
-- Command:
+
+Command:
 ```
 sudo service datadog-agent start
 ```
 DESCRIPTION:
 - Run a check
-- COMMAND:
+
+COMMAND:
 ```	
 sudo -u dd-agent -- datadog-agent check <CHECK_NAME>
 ```
@@ -62,9 +64,11 @@ COLLECTING METRICS:
 
 Directions to add a tag:
 To add tags in the Agent config file, go back to your terminal and paste the following code
-- DESCRIPTION: 
+
+DESCRIPTION: 
 - This command will allow you to go into the datadog.yaml config file and alter some of the code
-- COMMAND:
+
+COMMAND:
 ```
 vagrant@vagrant:~$ sudo nano datadog.yaml
 ```
@@ -76,24 +80,29 @@ Tags:
 -	“environment : dev”
 ```
 -	 ![tag code](Tagpicture1.png)
-- Once you have completed adding a tag, it is time to restart the agent and refresh the Datadog Dashboard.
-- DESCRIPTION:
+
+Once you have completed adding a tag, it is time to restart the agent and refresh the Datadog Dashboard.
+
+DESCRIPTION:
 - This will restart the agent.
-- COMMAND:
+
+COMMAND:
 ```
 vagrant@vagrant:~$ sudo service datadog-agent restart
 ```
 
-- DESCRIPTION:
+DESCRIPTION:
 - If the metric still does not show on the dashboard after the restart and a refresh of the dashboard, try this step. This command will stop the agent. 	
-- COMMAND:
+
+COMMAND:
 ```
 vagrant@vagrant:~$ sudo service datadog-agent stop
 ```
 
-- DESCRIPTION:
+DESCRIPTION:
 - After stopping the agent, you must start the agent again. These stop/start commands is an alternative way of restarting the agent. 	
-- COMMAND:
+
+COMMAND:
 ```
 vagrant@vagrant:~$ sudo service datadog-agent start
 ```
@@ -106,17 +115,19 @@ Once the agent restart has been completed, go back to the web browser and refres
 I referenced this website: https://ubuntu.com/server/docs/databases-postgresql
 
 
-- DESCRIPTION:
+DESCRIPTION:
 - Installs the database and set a password for the postgres user
-- COMMAND:
+
+COMMAND:
 ```
 vagrant@vagrant:~$ sudo apt install postgresql
 vagrant@vagrant:~$ sudo -u postgres psql template1
 ```
 
-- DESCRIPTION:
+DESCRIPTION:
 - Implementing the Datadog Agent	
-- COMMAND:
+
+COMMAND:
 ```
 vagrant@vagrant:/etc/postgresql/10$ sudo vim /etc/datadog-agent/datadog.yaml^C
 vagrant@vagrant:/etc/postgresql/10$ cd /etc/datadog-agent
@@ -130,7 +141,9 @@ vagrant@vagrant:/etc/datadog-agent/checks.d$ sudo vim hello.py
 ```
 Once I created a custom agent and called it “hello.py”, I want to create the agent check that submits a metric with a random value between 0 and 1000
 -    ![my metric code ](mymetriccodepicture3.png)
--	CODE: 
+
+
+CODE: 
 ```
 
 # the following try/except block will make the custom check compatible with any Agent version
@@ -150,14 +163,16 @@ class HelloCheck(AgentCheck):
         self.monotonic_count('my_metric', random.randint(0,1000))
 ```
 - We would also like to change the .py so that it only submits the metric once every 45 seconds. To do so use this line of command and change the default value (30) to 45.
-- Code:
+
+Code:
 ```
 vagrant@vagrant:/etc/datadog-agent/conf.d$ sudo vim hello.yaml
 ```
 
 ![timecode](45secondspicture4.png)
 
-- CODE:
+
+CODE:
 ```
 init_config:
 
